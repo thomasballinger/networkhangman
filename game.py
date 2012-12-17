@@ -80,6 +80,16 @@ ART = [
          |
    ______|____
 """,
+        """
+     _____
+     |   |
+     x   |
+    /|\  |
+     |   |
+    / \  |
+         |
+   ______|____
+""",
 ]
 
 class Hangman(object):
@@ -135,6 +145,8 @@ class Hangman(object):
             return 'No word yet'
 
     def done(self):
+        if self.word is None:
+            return False
         return not any(x for x in self.word if x not in self.guessed)
 
 if __name__ == '__main__':

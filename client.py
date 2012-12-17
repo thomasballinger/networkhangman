@@ -21,7 +21,6 @@ class Client(object):
         word = raw_input('Enter a word for your opponent to guess: ')
         self.s.send('assign '+word)
         m = self.s.recv(1000)
-        print m
         while True:
             self.s.send('ready?')
             m = self.s.recv(1000)
@@ -35,6 +34,10 @@ class Client(object):
             self.s.send('guess '+guess)
             m = self.s.recv(1000)
             print m
+            if 'You win' in m:
+                break
+            if 'You lose' in m:
+                break
 
 if __name__ == '__main__':
 

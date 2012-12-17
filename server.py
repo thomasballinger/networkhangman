@@ -66,15 +66,15 @@ class Connection(object):
             self.send(self.action(message))
     def action(self, message):
         if message == 'paired?':
-            return self.game if self in self.server.pair_mapping else False
+            return self.game.display() if self in self.server.pair_mapping else False
         if message == 'ready?':
-            return self.game if self.game.word is not None else False
+            return self.game.display() if self.game.word is not None else False
         elif message[:5] == 'guess':
             if len(message) != 7:
                 print 'received bad guess message:', message
                 return False
             self.game.guess(message[6])
-            return self.game
+            return self.game.display()
         elif message[:6] == 'assign':
             try:
                 cmd, word = message.split()
@@ -83,7 +83,7 @@ class Connection(object):
                 return False
             if self in self.server.pair_mapping:
                 self.server.pair_mapping[self].game.set_word(word)
-                return self.game
+                return self.game.display()
             else:
                 print 'tried to set word, but game is unpaired'
                 return False
